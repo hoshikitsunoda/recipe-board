@@ -9,11 +9,14 @@ import {
   GraphQLList,
   GraphQLFloat,
 } from 'graphql'
-// const _ = require('lodash')
+import mongoose from 'mongoose'
+import dotenv from 'dotenv'
 
 const app: Application = express()
+dotenv.config()
 
 const PORT: number = 8000
+const URL = `mongodb+srv://${process.env.USERNAME}:${process.env.PASSWORD}@recipe-board.lel7a.mongodb.net/recipe-board?retryWrites=true&w=majority`
 
 const recipeList = [
   {
@@ -30,6 +33,11 @@ const recipeList = [
     id: '3',
     recipe: 'Grilled Asparagus',
     ingredients: [{ ingredient: 'asparagus', quantity: 1, unit: 'lb' }],
+  },
+  {
+    id: '4',
+    recipe: 'Mac & Cheese',
+    ingredients: [{ ingredient: 'cheese', quantity: 1, unit: 'cup' }],
   },
 ]
 
@@ -57,8 +65,8 @@ const RootQuery = new GraphQLObjectType({
     recipe: {
       type: new GraphQLList(RecipeType),
       args: { id: { type: GraphQLString } },
-      resolve() {
-        return recipeList
+      resolve: () => {
+        return recipeList.filter((item) => item.id === '4')
       },
     },
   },
@@ -66,6 +74,11 @@ const RootQuery = new GraphQLObjectType({
 
 const schema = new GraphQLSchema({
   query: RootQuery,
+})
+
+mongoose.connect(URL, { useNewUrlParser: true, useUnifiedTopology: true })
+mongoose.connection.once('open', () => {
+  console.log('connected to database')
 })
 
 app.use(
