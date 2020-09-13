@@ -1,14 +1,8 @@
 # dependencies
-/node_modules
-/.pnp
-.pnp.js
-
-# testing
-/coverage
+node_modules/
 
 # production
-/build
-src/tailwind.output.css
+dist/
 
 # misc
 .DS_Store
