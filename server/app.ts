@@ -5,41 +5,21 @@ import {
   GraphQLSchema,
   GraphQLObjectType,
   GraphQLString,
-  // GraphQLID,
+  GraphQLID,
   GraphQLList,
   GraphQLFloat,
+  GraphQLNonNull,
+  GraphQLInputObjectType,
 } from 'graphql'
 import mongoose from 'mongoose'
 import dotenv from 'dotenv'
+import Recipe from './models/recipe'
 
 const app: Application = express()
 dotenv.config()
 
 const PORT: number = 8000
 const URL = `mongodb+srv://${process.env.USERNAME}:${process.env.PASSWORD}@recipe-board.lel7a.mongodb.net/recipe-board?retryWrites=true&w=majority`
-
-const recipeList = [
-  {
-    id: '1',
-    recipe: 'Meatball',
-    ingredients: [{ ingredient: 'meat', quantity: 2, unit: 'lb' }],
-  },
-  {
-    id: '2',
-    recipe: 'Risotto',
-    ingredients: [{ ingredient: 'mushroom', quantity: 8, unit: 'oz' }],
-  },
-  {
-    id: '3',
-    recipe: 'Grilled Asparagus',
-    ingredients: [{ ingredient: 'asparagus', quantity: 1, unit: 'lb' }],
-  },
-  {
-    id: '4',
-    recipe: 'Mac & Cheese',
-    ingredients: [{ ingredient: 'cheese', quantity: 1, unit: 'cup' }],
-  },
-]
 
 const IngredientType = new GraphQLObjectType({
   name: 'Ingredient',
@@ -53,10 +33,20 @@ const IngredientType = new GraphQLObjectType({
 const RecipeType = new GraphQLObjectType({
   name: 'Recipe',
   fields: () => ({
-    id: { type: GraphQLString },
+    id: { type: GraphQLID },
     recipe: { type: GraphQLString },
     ingredients: { type: new GraphQLList(IngredientType) },
+    instructions: { type: GraphQLString },
   }),
+})
+
+const IngredientInputType = new GraphQLInputObjectType({
+  name: 'IngredientInput',
+  fields: {
+    ingredient: { type: new GraphQLNonNull(GraphQLString) },
+    quantity: { type: new GraphQLNonNull(GraphQLFloat) },
+    unit: { type: new GraphQLNonNull(GraphQLString) },
+  },
 })
 
 const RootQuery = new GraphQLObjectType({
@@ -64,9 +54,31 @@ const RootQuery = new GraphQLObjectType({
   fields: {
     recipe: {
       type: new GraphQLList(RecipeType),
-      args: { id: { type: GraphQLString } },
+      args: { id: { type: GraphQLID } },
       resolve: () => {
-        return recipeList.filter((item) => item.id === '4')
+        return Recipe.find({})
+      },
+    },
+  },
+})
+
+const Mutation = new GraphQLObjectType({
+  name: 'Mutation',
+  fields: {
+    addRecipe: {
+      type: RecipeType,
+      args: {
+        recipe: { type: new GraphQLNonNull(GraphQLString) },
+        ingredients: { type: new GraphQLList(IngredientInputType) },
+        instructions: { type: new GraphQLNonNull(GraphQLString) },
+      },
+      resolve: (_, args) => {
+        let recipe = new Recipe({
+          recipe: args.recipe,
+          ingredients: args.ingredients,
+          instructions: args.instructions,
+        })
+        return recipe.save()
       },
     },
   },
@@ -74,6 +86,7 @@ const RootQuery = new GraphQLObjectType({
 
 const schema = new GraphQLSchema({
   query: RootQuery,
+  mutation: Mutation,
 })
 
 mongoose.connect(URL, { useNewUrlParser: true, useUnifiedTopology: true })
