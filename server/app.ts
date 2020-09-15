@@ -10,7 +10,7 @@ const app: Application = express()
 dotenv.config()
 
 const PORT: number = 8000
-const URL = `mongodb+srv://${process.env.USERNAME}:${process.env.PASSWORD}@recipe-board.lel7a.mongodb.net/recipe-board?retryWrites=true&w=majority`
+const URL: string = `mongodb+srv://${process.env.USERNAME}:${process.env.PASSWORD}@recipe-board.lel7a.mongodb.net/recipe-board?retryWrites=true&w=majority`
 
 mongoose.connect(URL, { useNewUrlParser: true, useUnifiedTopology: true })
 mongoose.connection.once('open', () => {
