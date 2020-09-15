@@ -41,7 +41,7 @@ const IngredientInputType = new GraphQLInputObjectType({
 const RootQuery = new GraphQLObjectType({
   name: 'RootQueryType',
   fields: {
-    recipe: {
+    recipes: {
       type: new GraphQLList(RecipeType),
       args: { id: { type: GraphQLID } },
       resolve: () => {
