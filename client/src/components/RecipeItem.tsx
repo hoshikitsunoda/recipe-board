@@ -1,7 +1,7 @@
 import React from 'react'
 import { IIngredient, IRecipe } from '../types/types'
 
-type IProps = IRecipe
+type IProps = Omit<IRecipe, 'id'>
 
 const RecipeItem: React.FC<IProps> = ({
   recipe,

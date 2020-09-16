@@ -5,7 +5,7 @@ export interface IIngredient {
 }
 
 export interface IRecipe {
-  id?: string
+  id: string
   recipe: string
   ingredients: IIngredient[]
   instructions: string

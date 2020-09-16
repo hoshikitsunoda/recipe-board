@@ -19,12 +19,14 @@ const RECIPES_QUERY = gql`
 `
 
 const RecipeList: React.FC = (): any => {
-  const { loading, error, data } = useQuery<IRecipeList>(RECIPES_QUERY)
+  const { loading, error, data = {} as IRecipeList } = useQuery<IRecipeList>(
+    RECIPES_QUERY
+  )
 
   if (loading) return <p>Loading...</p>
   if (error) return <p>Error :(</p>
 
-  const recipeItem = data?.recipes.map(({ id, ...props }: IRecipe) => (
+  const recipeItem = data.recipes.map(({ id, ...props }: IRecipe) => (
     <RecipeItem key={id} {...props} />
   ))
 
