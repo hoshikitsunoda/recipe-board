@@ -2,14 +2,14 @@ import React from 'react'
 import { ApolloClient, ApolloProvider, InMemoryCache } from '@apollo/client'
 import RecipeList from './components/RecipeList'
 
-const URI = `http://localhost:8000/graphql`
+const URI: string = `http://localhost:8000/graphql`
 
 const client = new ApolloClient({
   uri: URI,
   cache: new InMemoryCache(),
 })
 
-const App = () => {
+const App: React.FC = () => {
   return (
     <ApolloProvider client={client}>
       <div>
