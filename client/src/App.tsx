@@ -13,7 +13,6 @@ const App: React.FC = () => {
   return (
     <ApolloProvider client={client}>
       <div>
-        <h2>Client Side</h2>
         <RecipeList />
       </div>
     </ApolloProvider>

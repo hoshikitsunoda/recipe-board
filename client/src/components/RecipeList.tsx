@@ -30,7 +30,7 @@ const RecipeList: React.FC = (): any => {
     <RecipeItem key={id} {...props} />
   ))
 
-  return recipeItem
+  return <div className="flex max-w-6xl mx-auto my-0">{recipeItem}</div>
 }
 
 export default RecipeList
