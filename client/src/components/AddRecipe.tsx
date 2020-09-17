@@ -1,16 +1,20 @@
 import React, { useState } from 'react'
 import IngredientInput from './IngredientInput'
 
-const AddRecipe = () => {
+const AddRecipe: React.FC = () => {
   const [count, setCount] = useState(1)
-  let ingredients = []
+  let ingredients: JSX.Element[] = []
 
-  const addInputHandler = (event: any) => {
+  const addInputHandler = (
+    event: React.MouseEvent<HTMLButtonElement>
+  ): void => {
     event.preventDefault()
     setCount(count + 1)
   }
 
-  const subtractInputHandler = (event: any) => {
+  const subtractInputHandler = (
+    event: React.MouseEvent<HTMLButtonElement>
+  ): void => {
     event.preventDefault()
     count <= 0 ? setCount(count - 1) : setCount(1)
   }

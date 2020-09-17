@@ -1,6 +1,8 @@
 import React from 'react'
 
-const IngredientInput = () => {
+const units = ['lb', 'oz', 'cup', 'tbsp', 'tsp', 'ml', 'inch']
+
+const IngredientInput: React.FC = () => {
   return (
     <div className="flex justify-between space-x-2 mb-2">
       <input
@@ -18,13 +20,11 @@ const IngredientInput = () => {
         name="unit"
         id="unit"
       >
-        <option value="lb">lb</option>
-        <option value="oz">oz</option>
-        <option value="cup">cup</option>
-        <option value="tbsp">tbsp</option>
-        <option value="tsp">tsp</option>
-        <option value="ml">ml</option>
-        <option value="inch">inch</option>
+        {units.map((unit) => (
+          <option key={unit} value={unit}>
+            {unit}
+          </option>
+        ))}
       </select>
     </div>
   )
