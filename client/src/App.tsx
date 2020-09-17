@@ -1,6 +1,7 @@
 import React from 'react'
 import { ApolloClient, ApolloProvider, InMemoryCache } from '@apollo/client'
 import RecipeList from './components/RecipeList'
+import AddRecipe from './components/AddRecipe'
 
 const URI: string = `http://localhost:8000/graphql`
 
@@ -19,6 +20,7 @@ const App: React.FC = () => {
           </h1>
         </header>
         <RecipeList />
+        <AddRecipe />
       </div>
     </ApolloProvider>
   )
