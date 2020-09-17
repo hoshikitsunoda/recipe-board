@@ -12,7 +12,12 @@ const client = new ApolloClient({
 const App: React.FC = () => {
   return (
     <ApolloProvider client={client}>
-      <div>
+      <div className="pb-16">
+        <header className="text-center py-6 mb-8 lg:mb-16 bg-yellow-900 shadow-lg">
+          <h1 className="text-3xl font-bold font-mono text-gray-100 tracking-wider">
+            Recipe Board
+          </h1>
+        </header>
         <RecipeList />
       </div>
     </ApolloProvider>
