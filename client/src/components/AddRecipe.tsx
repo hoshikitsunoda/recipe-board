@@ -1,31 +1,35 @@
 import React, { useState } from 'react'
 import IngredientInput from './IngredientInput'
-import { IIngredient } from '../types/types'
+import { IIngredient, IRecipe } from '../types/types'
+
+type IState = Omit<IRecipe, 'id' | 'ingredients'>
 
 const AddRecipe: React.FC = () => {
-  const ingredientsState = {
+  const ingredientsState: IIngredient = {
     ingredient: '',
     quantity: 0,
     unit: 'lb',
   }
 
-  const [recipeName, setRecipeName] = useState<string>('')
+  const initialState: IState = {
+    recipe: '',
+    instructions: '',
+  }
+
   const [recipeIngredients, setRecipeIngredients] = useState<IIngredient[]>([
     { ...ingredientsState },
   ])
-  const [recipeInstructions, setRecipeInstructions] = useState<string>('')
 
-  const recipeNameHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setRecipeName(event.target.value)
-  }
+  const [recipeData, setRecipeData] = useState<IState>(initialState)
 
-  const recipeInstructionHandler = (
-    event: React.ChangeEvent<HTMLTextAreaElement>
+  const onChangeHandler = (
+    event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
-    setRecipeInstructions(event.target.value)
+    event.preventDefault()
+    setRecipeData({ ...recipeData, [event.target.name]: event.target.value })
   }
 
-  console.log(recipeName, recipeIngredients.shift(), recipeInstructions)
+  console.log(recipeData, recipeIngredients)
 
   const subLabels: string[] = ['ingredient', 'quantity', 'unit']
 
@@ -43,7 +47,7 @@ const AddRecipe: React.FC = () => {
             className="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
             type="text"
             name="recipe"
-            onChange={recipeNameHandler}
+            onChange={onChangeHandler}
           />
         </div>
         <div className="mb-2">
@@ -80,9 +84,8 @@ const AddRecipe: React.FC = () => {
           </label>
           <textarea
             name="instructions"
-            value={recipeInstructions}
             className="border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-            onChange={recipeInstructionHandler}
+            onChange={onChangeHandler}
           />
         </div>
         <button className="bg-orange-500 hover:bg-orange-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
