@@ -29,6 +29,21 @@ const ADD_RECIPE = gql`
   }
 `
 
+const RECIPES_QUERY = gql`
+  query GetRecipes {
+    recipes {
+      id
+      recipe
+      ingredients {
+        ingredient
+        quantity
+        unit
+      }
+      instructions
+    }
+  }
+`
+
 const AddRecipe: React.FC = () => {
   const ingredientsState: IIngredient = {
     ingredient: '',
@@ -123,7 +138,17 @@ const AddRecipe: React.FC = () => {
             onChange={onChangeHandler}
           />
         </div>
-        <Mutation mutation={ADD_RECIPE} variables={variables}>
+        <Mutation
+          mutation={ADD_RECIPE}
+          variables={variables}
+          refetchQueries={() => {
+            return [
+              {
+                query: RECIPES_QUERY,
+              },
+            ]
+          }}
+        >
           {(postMutation: any) => (
             <button
               onClick={postMutation}
