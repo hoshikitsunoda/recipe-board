@@ -85,80 +85,78 @@ const AddRecipe: React.FC = () => {
 
   return (
     <div className="fixed bottom-0 p-8 w-full lg:w-1/2 xl:w-1/3 bg-orange-100 shadow-2xl">
-      <div>
-        <div className="mb-2">
-          <label
-            htmlFor="recipe"
-            className="block text-gray-700 font-mono text-sm mb-2"
-          >
-            Recipe Name:
-          </label>
-          <input
-            className="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-            type="text"
-            name="recipe"
-            onChange={onChangeHandler}
-          />
-        </div>
-        <div className="mb-2">
-          <label
-            htmlFor="ingredients"
-            className="text-gray-700 font-mono text-sm mb-2"
-          >
-            Ingredients:
-          </label>
-          <div className="flex justify-between space-x-2 mt-2">
-            {subLabels.map((label) => (
-              <label
-                key={label}
-                htmlFor={label}
-                className={`text-gray-700 w-${
-                  label === 'ingredient' ? '2/4' : '1/4'
-                } font-mono text-xs mb-2 mx-0`}
-              >
-                {label}
-              </label>
-            ))}
-          </div>
-          <IngredientInput
-            recipeIngredients={recipeIngredients}
-            setRecipeIngredients={setRecipeIngredients}
-          />
-        </div>
-        <div className="mb-2">
-          <label
-            htmlFor="instructions"
-            className="block text-gray-700 font-mono text-sm mb-2"
-          >
-            Instructions:
-          </label>
-          <textarea
-            name="instructions"
-            className="border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-            onChange={onChangeHandler}
-          />
-        </div>
-        <Mutation
-          mutation={ADD_RECIPE}
-          variables={variables}
-          refetchQueries={() => {
-            return [
-              {
-                query: RECIPES_QUERY,
-              },
-            ]
-          }}
+      <div className="mb-2">
+        <label
+          htmlFor="recipe"
+          className="block text-gray-700 font-mono text-sm mb-2"
         >
-          {(postMutation: any) => (
-            <button
-              onClick={postMutation}
-              className="bg-orange-500 hover:bg-orange-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-            >
-              ADD
-            </button>
-          )}
-        </Mutation>
+          Recipe Name:
+        </label>
+        <input
+          className="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+          type="text"
+          name="recipe"
+          onChange={onChangeHandler}
+        />
       </div>
+      <div className="mb-2">
+        <label
+          htmlFor="ingredients"
+          className="text-gray-700 font-mono text-sm mb-2"
+        >
+          Ingredients:
+        </label>
+        <div className="flex justify-between space-x-2 mt-2">
+          {subLabels.map((label) => (
+            <label
+              key={label}
+              htmlFor={label}
+              className={`text-gray-700 w-${
+                label === 'ingredient' ? '2/4' : '1/4'
+              } font-mono text-xs mb-2 mx-0`}
+            >
+              {label}
+            </label>
+          ))}
+        </div>
+        <IngredientInput
+          recipeIngredients={recipeIngredients}
+          setRecipeIngredients={setRecipeIngredients}
+        />
+      </div>
+      <div className="mb-2">
+        <label
+          htmlFor="instructions"
+          className="block text-gray-700 font-mono text-sm mb-2"
+        >
+          Instructions:
+        </label>
+        <textarea
+          name="instructions"
+          className="border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+          onChange={onChangeHandler}
+        />
+      </div>
+      <Mutation
+        mutation={ADD_RECIPE}
+        variables={variables}
+        refetchQueries={() => {
+          return [
+            {
+              query: RECIPES_QUERY,
+            },
+          ]
+        }}
+      >
+        {(postMutation: any) => (
+          <button
+            onClick={postMutation}
+            className="bg-orange-500 hover:bg-orange-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+          >
+            ADD
+          </button>
+        )}
+      </Mutation>
     </div>
   )
 }

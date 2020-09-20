@@ -31,7 +31,7 @@ const RecipeList: React.FC = (): any => {
   ))
 
   return (
-    <div className="flex flex-col lg:flex-row flex-wrap justify-center items-center space-y-6 lg:space-y-0 lg:space-x-6 max-w-6xl mx-auto my-0">
+    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-6 lg:mx-auto my-0">
       {recipeItem}
     </div>
   )
