@@ -31,7 +31,7 @@ const RecipeList: React.FC = (): any => {
   ))
 
   return (
-    <div className="flex flex-col lg:flex-row justify-center items-center space-y-6 lg:space-y-0 lg:space-x-6 max-w-6xl mx-auto my-0">
+    <div className="flex flex-col lg:flex-row flex-wrap justify-center items-center space-y-6 lg:space-y-0 lg:space-x-6 max-w-6xl mx-auto my-0">
       {recipeItem}
     </div>
   )
