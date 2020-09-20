@@ -1,24 +1,10 @@
 import React from 'react'
-import { gql, useQuery } from '@apollo/client'
+import { useQuery } from '@apollo/client'
 import RecipeItem from './RecipeItem'
 import { IRecipe, IRecipeList } from '../types/types'
+import { RECIPES_QUERY } from '../queries/queries'
 
-const RECIPES_QUERY = gql`
-  query GetRecipes {
-    recipes {
-      id
-      recipe
-      ingredients {
-        ingredient
-        quantity
-        unit
-      }
-      instructions
-    }
-  }
-`
-
-const RecipeList: React.FC = (): any => {
+const RecipeList: React.FC = () => {
   const { loading, error, data = {} as IRecipeList } = useQuery<IRecipeList>(
     RECIPES_QUERY
   )

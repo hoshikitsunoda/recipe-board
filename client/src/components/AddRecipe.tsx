@@ -1,48 +1,11 @@
 import React, { useState, useRef, MutableRefObject } from 'react'
-import { gql } from '@apollo/client'
 import { Mutation } from '@apollo/client/react/components'
 
 import IngredientInput from './IngredientInput'
 import { IIngredient, IRecipe } from '../types/types'
+import { ADD_RECIPE, RECIPES_QUERY } from '../queries/queries'
 
 type IState = Omit<IRecipe, 'id' | 'ingredients'>
-
-const ADD_RECIPE = gql`
-  mutation AddRecipe(
-    $recipe: String!
-    $ingredients: [IngredientInput]
-    $instructions: String!
-  ) {
-    addRecipe(
-      recipe: $recipe
-      ingredients: $ingredients
-      instructions: $instructions
-    ) {
-      recipe
-      ingredients {
-        ingredient
-        quantity
-        unit
-      }
-      instructions
-    }
-  }
-`
-
-const RECIPES_QUERY = gql`
-  query GetRecipes {
-    recipes {
-      id
-      recipe
-      ingredients {
-        ingredient
-        quantity
-        unit
-      }
-      instructions
-    }
-  }
-`
 
 const AddRecipe: React.FC = () => {
   const ingredientsState: IIngredient = {
