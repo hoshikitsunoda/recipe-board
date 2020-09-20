@@ -36,6 +36,7 @@ const IngredientInput: React.FC<IProps> = ({
     event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
   ): void => {
     event.preventDefault()
+
     setIngredients({
       ...ingredients,
       [event.target.name]: event.target.value,
@@ -46,6 +47,7 @@ const IngredientInput: React.FC<IProps> = ({
     event: React.MouseEvent<HTMLButtonElement>
   ): void => {
     event.preventDefault()
+
     setRecipeIngredients([
       ...recipeIngredients,
       {
@@ -54,13 +56,12 @@ const IngredientInput: React.FC<IProps> = ({
         unit: ingredients.unit,
       },
     ])
+
     ingredientInput.current.value = ''
     quantityInput.current.value = ''
     unitInput.current.value = ''
 
-    setTimeout(() => {
-      setIngredients(initialState)
-    }, 1000)
+    setIngredients(initialState)
   }
 
   const removeIngredientHandler = (
@@ -68,6 +69,7 @@ const IngredientInput: React.FC<IProps> = ({
     event: React.MouseEvent<HTMLButtonElement>
   ): void => {
     event.preventDefault()
+
     const ingredientsCopy = [...recipeIngredients]
     setRecipeIngredients(
       ingredientsCopy.filter((item) => item.ingredient !== name)
@@ -103,7 +105,6 @@ const IngredientInput: React.FC<IProps> = ({
             name="ingredient"
             onChange={onChangeHandler}
             ref={ingredientInput}
-            required
           />
           <input
             className="appearance-none border rounded w-1/4 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
@@ -111,6 +112,7 @@ const IngredientInput: React.FC<IProps> = ({
             name="quantity"
             onChange={onChangeHandler}
             ref={quantityInput}
+            min="0"
           />
           <select
             className="border rounded w-1/4 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
