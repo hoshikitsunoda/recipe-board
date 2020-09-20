@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useRef, MutableRefObject } from 'react'
 import { gql } from '@apollo/client'
 import { Mutation } from '@apollo/client/react/components'
 
@@ -58,6 +58,8 @@ const AddRecipe: React.FC = () => {
     { ...ingredientsState },
   ])
   const [recipeData, setRecipeData] = useState<IState>(initialState)
+  const inputEl = useRef() as MutableRefObject<HTMLInputElement>
+  const textAreaEl = useRef() as MutableRefObject<HTMLTextAreaElement>
 
   const onChangeHandler = (
     event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -66,8 +68,16 @@ const AddRecipe: React.FC = () => {
     setRecipeData({ ...recipeData, [event.target.name]: event.target.value })
   }
 
-  const copiedIngredients = [...recipeIngredients]
-  const ingredientValue = copiedIngredients.map((ing) => {
+  const resetStatesHandler = () => {
+    setRecipeIngredients([ingredientsState])
+    setRecipeData(initialState)
+    if (inputEl.current !== null) {
+      inputEl.current.value = ''
+      textAreaEl.current.value = ''
+    }
+  }
+
+  const ingredientValue = recipeIngredients.map((ing) => {
     return {
       ingredient: ing.ingredient,
       quantity: +ing.quantity,
@@ -96,6 +106,7 @@ const AddRecipe: React.FC = () => {
           className="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
           type="text"
           name="recipe"
+          ref={inputEl}
           onChange={onChangeHandler}
         />
       </div>
@@ -134,6 +145,7 @@ const AddRecipe: React.FC = () => {
         <textarea
           name="instructions"
           className="border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+          ref={textAreaEl}
           onChange={onChangeHandler}
         />
       </div>
@@ -147,6 +159,7 @@ const AddRecipe: React.FC = () => {
             },
           ]
         }}
+        onCompleted={resetStatesHandler}
       >
         {(postMutation: any) => (
           <button
