@@ -1,8 +1,33 @@
 import React, { useState } from 'react'
+import { gql } from '@apollo/client'
+import { Mutation } from '@apollo/client/react/components'
+
 import IngredientInput from './IngredientInput'
 import { IIngredient, IRecipe } from '../types/types'
 
 type IState = Omit<IRecipe, 'id' | 'ingredients'>
+
+const ADD_RECIPE = gql`
+  mutation AddRecipe(
+    $recipe: String!
+    $ingredients: [IngredientInput]
+    $instructions: String!
+  ) {
+    addRecipe(
+      recipe: $recipe
+      ingredients: $ingredients
+      instructions: $instructions
+    ) {
+      recipe
+      ingredients {
+        ingredient
+        quantity
+        unit
+      }
+      instructions
+    }
+  }
+`
 
 const AddRecipe: React.FC = () => {
   const ingredientsState: IIngredient = {
@@ -10,16 +35,13 @@ const AddRecipe: React.FC = () => {
     quantity: 0,
     unit: 'lb',
   }
-
   const initialState: IState = {
     recipe: '',
     instructions: '',
   }
-
   const [recipeIngredients, setRecipeIngredients] = useState<IIngredient[]>([
     { ...ingredientsState },
   ])
-
   const [recipeData, setRecipeData] = useState<IState>(initialState)
 
   const onChangeHandler = (
@@ -29,13 +51,26 @@ const AddRecipe: React.FC = () => {
     setRecipeData({ ...recipeData, [event.target.name]: event.target.value })
   }
 
-  console.log(recipeData, recipeIngredients)
+  const copiedIngredients = [...recipeIngredients]
+  const ingredientValue = copiedIngredients.map((ing) => {
+    return {
+      ingredient: ing.ingredient,
+      quantity: +ing.quantity,
+      unit: ing.unit,
+    }
+  })
+
+  const variables = {
+    recipe: recipeData.recipe,
+    ingredients: ingredientValue,
+    instructions: recipeData.instructions,
+  }
 
   const subLabels: string[] = ['ingredient', 'quantity', 'unit']
 
   return (
     <div className="fixed bottom-0 p-8 w-full lg:w-1/2 xl:w-1/3 bg-orange-100 shadow-2xl">
-      <form>
+      <div>
         <div className="mb-2">
           <label
             htmlFor="recipe"
@@ -88,10 +123,17 @@ const AddRecipe: React.FC = () => {
             onChange={onChangeHandler}
           />
         </div>
-        <button className="bg-orange-500 hover:bg-orange-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
-          ADD
-        </button>
-      </form>
+        <Mutation mutation={ADD_RECIPE} variables={variables}>
+          {(postMutation: any) => (
+            <button
+              onClick={postMutation}
+              className="bg-orange-500 hover:bg-orange-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+            >
+              ADD
+            </button>
+          )}
+        </Mutation>
+      </div>
     </div>
   )
 }
