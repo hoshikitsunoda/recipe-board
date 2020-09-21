@@ -5,22 +5,20 @@ import IngredientInput from './IngredientInput'
 import { IIngredient, IRecipe } from '../types/types'
 import { ADD_RECIPE, RECIPES_QUERY } from '../queries/queries'
 
-type IState = Omit<IRecipe, 'id' | 'ingredients'>
-
 const AddRecipe: React.FC = () => {
   const ingredientsState: IIngredient = {
     ingredient: '',
     quantity: 0,
     unit: 'lb',
   }
-  const initialState: IState = {
+  const initialState: IRecipe = {
     recipe: '',
     instructions: '',
   }
   const [recipeIngredients, setRecipeIngredients] = useState<IIngredient[]>([
     { ...ingredientsState },
   ])
-  const [recipeData, setRecipeData] = useState<IState>(initialState)
+  const [recipeData, setRecipeData] = useState<IRecipe>(initialState)
   const inputEl = useRef() as MutableRefObject<HTMLInputElement>
   const textAreaEl = useRef() as MutableRefObject<HTMLTextAreaElement>
 
@@ -40,7 +38,7 @@ const AddRecipe: React.FC = () => {
     }
   }
 
-  const ingredientValue = recipeIngredients.map((ing) => {
+  const ingredientValue: IIngredient[] = recipeIngredients.map((ing) => {
     return {
       ingredient: ing.ingredient,
       quantity: +ing.quantity,
@@ -48,7 +46,7 @@ const AddRecipe: React.FC = () => {
     }
   })
 
-  const variables = {
+  const variables: IRecipe = {
     recipe: recipeData.recipe,
     ingredients: ingredientValue,
     instructions: recipeData.instructions,
