@@ -22,6 +22,15 @@ export const ADD_RECIPE = gql`
   }
 `
 
+export const REMOVE_RECIPE = gql`
+  mutation remove($id: String!) {
+    removeRecipe(id: $id) {
+      id
+      recipe
+    }
+  }
+`
+
 export const RECIPES_QUERY = gql`
   query GetRecipes {
     recipes {

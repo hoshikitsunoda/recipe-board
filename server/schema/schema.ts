@@ -70,6 +70,15 @@ const Mutation = new GraphQLObjectType({
         return recipe.save()
       },
     },
+    removeRecipe: {
+      type: RecipeType,
+      args: {
+        id: { type: new GraphQLNonNull(GraphQLString) },
+      },
+      resolve: (_, args) => {
+        return Recipe.deleteOne({ _id: args.id })
+      },
+    },
   },
 })
 
