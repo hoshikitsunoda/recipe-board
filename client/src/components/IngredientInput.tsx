@@ -100,14 +100,14 @@ const IngredientInput: React.FC<IProps> = ({
         <ul>{ingredientList}</ul>
         <div className="flex justify-between space-x-2 mb-2">
           <input
-            className="appearance-none border rounded w-2/4 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            className="appearance-none border rounded w-6/12 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
             type="text"
             name="ingredient"
             onChange={onChangeHandler}
             ref={ingredientInput}
           />
           <input
-            className="appearance-none border rounded w-1/4 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            className="appearance-none border rounded w-3/12 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
             type="number"
             name="quantity"
             onChange={onChangeHandler}
@@ -115,7 +115,7 @@ const IngredientInput: React.FC<IProps> = ({
             min="0"
           />
           <select
-            className="border rounded w-1/4 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            className="border rounded w-2/12 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
             name="unit"
             id="unit"
             onChange={onChangeHandler}
@@ -127,15 +127,13 @@ const IngredientInput: React.FC<IProps> = ({
               </option>
             ))}
           </select>
+          <button
+            className="border w-auto lg:w-1/12 lg:py-2 lg:px-3 text-gray-700 hover:bg-orange-300 text-xl leading-4 p-2 outline-none border-orange-900"
+            onClick={addIngredientHandler}
+          >
+            +
+          </button>
         </div>
-      </div>
-      <div className="flex justify-items-start space-x-3">
-        <button
-          className="w-2/12 lg:w-1/12 hover:bg-orange-300 text-xl leading-4 p-2 outline-none border border-orange-900"
-          onClick={addIngredientHandler}
-        >
-          +
-        </button>
       </div>
     </>
   )
