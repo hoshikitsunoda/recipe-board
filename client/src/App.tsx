@@ -1,26 +1,29 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from 'react'
+import { ApolloClient, ApolloProvider, InMemoryCache } from '@apollo/client'
+import RecipeList from './components/RecipeList'
+import AddRecipe from './components/AddRecipe'
 
-function App() {
+const URI: string = `http://localhost:8000/graphql`
+
+const client = new ApolloClient({
+  uri: URI,
+  cache: new InMemoryCache(),
+})
+
+const App: React.FC = () => {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    <ApolloProvider client={client}>
+      <div className="pb-32 min-h-screen">
+        <header className="text-center py-6 mb-8 lg:mb-16 bg-yellow-900 shadow-lg">
+          <h1 className="text-3xl font-bold font-mono text-gray-100 tracking-wider">
+            Recipe Board
+          </h1>
+        </header>
+        <RecipeList />
+        <AddRecipe />
+      </div>
+    </ApolloProvider>
+  )
 }
 
-export default App;
+export default App

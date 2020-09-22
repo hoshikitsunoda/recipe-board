@@ -41,7 +41,7 @@ const IngredientInputType = new GraphQLInputObjectType({
 const RootQuery = new GraphQLObjectType({
   name: 'RootQueryType',
   fields: {
-    recipe: {
+    recipes: {
       type: new GraphQLList(RecipeType),
       args: { id: { type: GraphQLID } },
       resolve: () => {
@@ -68,6 +68,15 @@ const Mutation = new GraphQLObjectType({
           instructions: args.instructions,
         })
         return recipe.save()
+      },
+    },
+    removeRecipe: {
+      type: RecipeType,
+      args: {
+        id: { type: new GraphQLNonNull(GraphQLString) },
+      },
+      resolve: (_, args) => {
+        return Recipe.deleteOne({ _id: args.id })
       },
     },
   },
