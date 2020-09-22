@@ -125,9 +125,9 @@ const AddRecipe: React.FC = () => {
         {(postMutation: any) => (
           <button
             onClick={postMutation}
-            className="bg-orange-500 hover:bg-orange-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+            className="bg-orange-500 hover:bg-orange-700 text-white font-mono font-bold tracking-wider py-2 px-4 rounded focus:outline-none focus:shadow-outline"
           >
-            ADD
+            Add
           </button>
         )}
       </Mutation>

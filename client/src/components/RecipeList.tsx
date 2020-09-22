@@ -12,9 +12,11 @@ const RecipeList: React.FC = () => {
   if (loading) return <p>Loading...</p>
   if (error) return <p>Error :(</p>
 
-  const recipeItem = data.recipes.map(({ id, ...props }: IRecipe) => (
-    <RecipeItem key={id} {...props} />
-  ))
+  const recipeDataList = [...data.recipes]
+
+  const recipeItem = recipeDataList
+    .reverse()
+    .map((props: IRecipe) => <RecipeItem key={props.id} {...props} />)
 
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-6 lg:mx-auto my-0">
