@@ -41,4 +41,5 @@ export interface AddRecipeProps extends IngInputProps {
   resetRecipeDetail: () => void
   recipe: string
   instructions: string
+  recipeData: IRecipe
 }

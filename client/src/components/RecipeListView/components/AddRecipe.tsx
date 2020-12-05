@@ -1,4 +1,4 @@
-import React, { useState, useRef, MutableRefObject } from 'react'
+import React, { useState } from 'react'
 import { Mutation } from '@apollo/client/react/components'
 
 import IngredientInput from './IngredientInput'
@@ -25,16 +25,9 @@ const AddRecipe: React.FC<AddRecipeProps> = ({
   units,
   recipe,
   instructions,
+  recipeData,
 }) => {
-  const initialState: IRecipe = {
-    recipe: '',
-    instructions: '',
-  }
-  const [recipeData, setRecipeData] = useState<IRecipe>(initialState)
   const [isOpen, setIsOpen] = useState({ open: false })
-
-  const inputEl = useRef() as MutableRefObject<HTMLInputElement>
-  const textAreaEl = useRef() as MutableRefObject<HTMLTextAreaElement>
 
   const onChangeHandler = ({ target: { name, value } }: IEventTarget) => {
     setRecipeHandler(name, value)
@@ -91,7 +84,6 @@ const AddRecipe: React.FC<AddRecipeProps> = ({
                 className="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                 type="text"
                 name="recipe"
-                ref={inputEl}
                 onChange={onChangeHandler}
                 value={recipe}
               />
@@ -138,7 +130,6 @@ const AddRecipe: React.FC<AddRecipeProps> = ({
               <textarea
                 name="instructions"
                 className="border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                ref={textAreaEl}
                 onChange={onChangeHandler}
                 value={instructions}
               />

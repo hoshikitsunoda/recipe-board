@@ -9,7 +9,6 @@ const IngredientInput: React.FC<IngInputProps> = ({
   resetIngredients,
   ingredient,
   quantity,
-  unit,
   units,
 }) => {
   const onChangeHandler = ({ target: { name, value } }: IEventTarget): void => {

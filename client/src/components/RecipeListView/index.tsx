@@ -73,6 +73,7 @@ const RecipeListView = () => {
         units={units}
         recipe={recipe}
         instructions={instructions}
+        recipeData={recipeData}
       />
     </>
   )
