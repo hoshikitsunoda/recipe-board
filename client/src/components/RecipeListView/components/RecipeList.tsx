@@ -1,8 +1,8 @@
 import React from 'react'
 import { useQuery } from '@apollo/client'
 import RecipeItem from './RecipeItem'
-import { IRecipe, IRecipeList } from '../types/types'
-import { RECIPES_QUERY } from '../queries/queries'
+import { IRecipe, IRecipeList } from '../../../types'
+import { RECIPES_QUERY } from '../../../queries/queries'
 
 const RecipeList: React.FC = () => {
   const { loading, error, data = {} as IRecipeList } = useQuery<IRecipeList>(
@@ -19,7 +19,7 @@ const RecipeList: React.FC = () => {
     .map((props: IRecipe) => <RecipeItem key={props.id} {...props} />)
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-6 lg:mx-auto my-0">
+    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10 max-w-6xl mx-6 lg:mx-auto lg:my-16">
       {recipeItem}
     </div>
   )

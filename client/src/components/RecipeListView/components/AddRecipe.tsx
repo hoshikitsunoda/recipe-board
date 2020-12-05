@@ -1,44 +1,36 @@
-import React, { useState, useRef, MutableRefObject } from 'react'
+import React, { useState } from 'react'
 import { Mutation } from '@apollo/client/react/components'
 
 import IngredientInput from './IngredientInput'
-import { IIngredient, IRecipe } from '../types/types'
-import { ADD_RECIPE, RECIPES_QUERY } from '../queries/queries'
+import { Button } from '../../shared/Button'
+import {
+  IIngredient,
+  IRecipe,
+  AddRecipeProps,
+  IEventTarget,
+} from '../../../types'
+import { ADD_RECIPE, RECIPES_QUERY } from '../../../queries/queries'
 
-const AddRecipe: React.FC = () => {
-  const ingredientsState: IIngredient = {
-    ingredient: '',
-    quantity: 0,
-    unit: 'lb',
-  }
-  const initialState: IRecipe = {
-    recipe: '',
-    instructions: '',
-  }
-
-  const [recipeIngredients, setRecipeIngredients] = useState<IIngredient[]>([
-    { ...ingredientsState },
-  ])
-  const [recipeData, setRecipeData] = useState<IRecipe>(initialState)
+const AddRecipe: React.FC<AddRecipeProps> = ({
+  ingredientsHandler,
+  recipeIngredients,
+  recipeIngredientsHandler,
+  removeIngredientsHandler,
+  setRecipeHandler,
+  resetRecipeDetail,
+  resetIngredients,
+  ingredient,
+  quantity,
+  unit,
+  units,
+  recipe,
+  instructions,
+  recipeData,
+}) => {
   const [isOpen, setIsOpen] = useState({ open: false })
 
-  const inputEl = useRef() as MutableRefObject<HTMLInputElement>
-  const textAreaEl = useRef() as MutableRefObject<HTMLTextAreaElement>
-
-  const onChangeHandler = (
-    event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-  ) => {
-    event.preventDefault()
-    setRecipeData({ ...recipeData, [event.target.name]: event.target.value })
-  }
-
-  const resetStatesHandler = () => {
-    setRecipeIngredients([ingredientsState])
-    setRecipeData(initialState)
-    if (inputEl.current !== null) {
-      inputEl.current.value = ''
-      textAreaEl.current.value = ''
-    }
+  const onChangeHandler = ({ target: { name, value } }: IEventTarget) => {
+    setRecipeHandler(name, value)
   }
 
   const toggleHandler = () => {
@@ -62,7 +54,7 @@ const AddRecipe: React.FC = () => {
   const subLabels: string[] = ['ingredient', 'quantity', 'unit']
 
   return (
-    <div className="fixed bottom-0 p-8 pt-2 w-full lg:w-1/2 xl:w-1/3 bg-orange-100 shadow-2xl">
+    <div className="fixed bottom-0 p-8 pt-2 w-full lg:w-1/2 xl:w-1/3 bg-orange-100 shadow-2xl border-solidPink border-r-8">
       <div className="w-full flex justify-between items-center">
         <h3 className="font-mono text-xl">Add Recipe</h3>
         <button
@@ -88,8 +80,8 @@ const AddRecipe: React.FC = () => {
                 className="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                 type="text"
                 name="recipe"
-                ref={inputEl}
                 onChange={onChangeHandler}
+                value={recipe}
               />
             </div>
             <div className="mb-2">
@@ -114,7 +106,14 @@ const AddRecipe: React.FC = () => {
               </div>
               <IngredientInput
                 recipeIngredients={recipeIngredients}
-                setRecipeIngredients={setRecipeIngredients}
+                ingredientsHandler={ingredientsHandler}
+                recipeIngredientsHandler={recipeIngredientsHandler}
+                removeIngredientsHandler={removeIngredientsHandler}
+                resetIngredients={resetIngredients}
+                ingredient={ingredient}
+                quantity={quantity}
+                unit={unit}
+                units={units}
               />
             </div>
             <div className="mb-2">
@@ -127,8 +126,8 @@ const AddRecipe: React.FC = () => {
               <textarea
                 name="instructions"
                 className="border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                ref={textAreaEl}
                 onChange={onChangeHandler}
+                value={instructions}
               />
             </div>
             <Mutation
@@ -141,15 +140,10 @@ const AddRecipe: React.FC = () => {
                   },
                 ]
               }}
-              onCompleted={resetStatesHandler}
+              onCompleted={resetRecipeDetail}
             >
               {(postMutation: any) => (
-                <button
-                  onClick={postMutation}
-                  className="bg-orange-500 hover:bg-orange-700 text-white font-mono font-bold tracking-wider py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-                >
-                  Add
-                </button>
+                <Button onClick={postMutation}>Add</Button>
               )}
             </Mutation>
           </>
