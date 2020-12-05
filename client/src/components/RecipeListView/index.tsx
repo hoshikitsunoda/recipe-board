@@ -20,7 +20,7 @@ const RecipeListView = () => {
 
   const [ingredients, setIngredients] = useState<IIngredient>(ingredientsState)
   const [recipeIngredients, setRecipeIngredients] = useState<IIngredient[]>([
-    { ...ingredientsState },
+    ingredientsState,
   ])
   const [recipeData, setRecipeData] = useState<IRecipe>(recipeState)
 
@@ -56,6 +56,7 @@ const RecipeListView = () => {
 
   const { ingredient, quantity, unit } = ingredients
   const { recipe, instructions } = recipeData
+
   return (
     <>
       <RecipeList />

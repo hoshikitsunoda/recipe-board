@@ -9,6 +9,7 @@ const IngredientInput: React.FC<IngInputProps> = ({
   resetIngredients,
   ingredient,
   quantity,
+  unit,
   units,
 }) => {
   const onChangeHandler = ({ target: { name, value } }: IEventTarget): void => {
@@ -63,11 +64,10 @@ const IngredientInput: React.FC<IngInputProps> = ({
             name="unit"
             id="unit"
             onChange={onChangeHandler}
+            value={unit}
           >
             {units.map((unit) => (
-              <option key={unit} value={unit}>
-                {unit}
-              </option>
+              <option key={unit}>{unit}</option>
             ))}
           </select>
           <button

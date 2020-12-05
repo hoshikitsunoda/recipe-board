@@ -33,10 +33,6 @@ const AddRecipe: React.FC<AddRecipeProps> = ({
     setRecipeHandler(name, value)
   }
 
-  const resetStatesHandler = () => {
-    resetRecipeDetail()
-  }
-
   const toggleHandler = () => {
     setIsOpen((prevState) => ({ open: !prevState.open }))
   }
@@ -144,7 +140,7 @@ const AddRecipe: React.FC<AddRecipeProps> = ({
                   },
                 ]
               }}
-              onCompleted={resetStatesHandler}
+              onCompleted={resetRecipeDetail}
             >
               {(postMutation: any) => (
                 <Button onClick={postMutation}>Add</Button>
