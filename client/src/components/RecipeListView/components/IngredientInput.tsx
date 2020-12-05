@@ -1,4 +1,4 @@
-import { IIngredient } from '../types/types'
+import { IIngredient } from '../../../types'
 import React, {
   useState,
   useRef,

@@ -1,8 +1,8 @@
 import React from 'react'
 import { useQuery } from '@apollo/client'
 import RecipeItem from './RecipeItem'
-import { IRecipe, IRecipeList } from '../types/types'
-import { RECIPES_QUERY } from '../queries/queries'
+import { IRecipe, IRecipeList } from '../../../types'
+import { RECIPES_QUERY } from '../../../queries/queries'
 
 const RecipeList: React.FC = () => {
   const { loading, error, data = {} as IRecipeList } = useQuery<IRecipeList>(

@@ -1,7 +1,7 @@
 import React from 'react'
-import { IIngredient, IRecipe } from '../types/types'
+import { IIngredient, IRecipe } from '../../../types'
 import { Mutation } from '@apollo/client/react/components'
-import { REMOVE_RECIPE, RECIPES_QUERY } from '../queries/queries'
+import { REMOVE_RECIPE, RECIPES_QUERY } from '../../../queries/queries'
 
 const RecipeItem: React.FC<IRecipe> = ({
   id,

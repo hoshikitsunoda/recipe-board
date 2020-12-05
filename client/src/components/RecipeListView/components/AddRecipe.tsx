@@ -2,8 +2,16 @@ import React, { useState, useRef, MutableRefObject } from 'react'
 import { Mutation } from '@apollo/client/react/components'
 
 import IngredientInput from './IngredientInput'
-import { IIngredient, IRecipe } from '../types/types'
-import { ADD_RECIPE, RECIPES_QUERY } from '../queries/queries'
+import { IIngredient, IRecipe } from '../../../types'
+import { ADD_RECIPE, RECIPES_QUERY } from '../../../queries/queries'
+
+interface IEventTarget {
+  name: string
+  value: string
+}
+interface IProps {
+  target: IEventTarget
+}
 
 const AddRecipe: React.FC = () => {
   const ingredientsState: IIngredient = {
@@ -25,11 +33,8 @@ const AddRecipe: React.FC = () => {
   const inputEl = useRef() as MutableRefObject<HTMLInputElement>
   const textAreaEl = useRef() as MutableRefObject<HTMLTextAreaElement>
 
-  const onChangeHandler = (
-    event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-  ) => {
-    event.preventDefault()
-    setRecipeData({ ...recipeData, [event.target.name]: event.target.value })
+  const onChangeHandler = ({ target: {name, value}}: IProps) => {
+    setRecipeData({ ...recipeData, [name]: value })
   }
 
   const resetStatesHandler = () => {
