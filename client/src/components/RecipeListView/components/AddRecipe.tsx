@@ -2,6 +2,7 @@ import React, { useState, useRef, MutableRefObject } from 'react'
 import { Mutation } from '@apollo/client/react/components'
 
 import IngredientInput from './IngredientInput'
+import { Button } from '../../shared/Button'
 import { IIngredient, IRecipe } from '../../../types'
 import { ADD_RECIPE, RECIPES_QUERY } from '../../../queries/queries'
 
@@ -33,7 +34,7 @@ const AddRecipe: React.FC = () => {
   const inputEl = useRef() as MutableRefObject<HTMLInputElement>
   const textAreaEl = useRef() as MutableRefObject<HTMLTextAreaElement>
 
-  const onChangeHandler = ({ target: {name, value}}: IProps) => {
+  const onChangeHandler = ({ target: { name, value } }: IProps) => {
     setRecipeData({ ...recipeData, [name]: value })
   }
 
@@ -67,7 +68,7 @@ const AddRecipe: React.FC = () => {
   const subLabels: string[] = ['ingredient', 'quantity', 'unit']
 
   return (
-    <div className="fixed bottom-0 p-8 pt-2 w-full lg:w-1/2 xl:w-1/3 bg-orange-100 shadow-2xl">
+    <div className="fixed bottom-0 p-8 pt-2 w-full lg:w-1/2 xl:w-1/3 bg-orange-100 shadow-2xl border-solidPink border-r-8">
       <div className="w-full flex justify-between items-center">
         <h3 className="font-mono text-xl">Add Recipe</h3>
         <button
@@ -149,12 +150,7 @@ const AddRecipe: React.FC = () => {
               onCompleted={resetStatesHandler}
             >
               {(postMutation: any) => (
-                <button
-                  onClick={postMutation}
-                  className="bg-orange-500 hover:bg-orange-700 text-white font-mono font-bold tracking-wider py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-                >
-                  Add
-                </button>
+                <Button onClick={postMutation}>Add</Button>
               )}
             </Mutation>
           </>
