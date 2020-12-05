@@ -3,43 +3,38 @@ import { Mutation } from '@apollo/client/react/components'
 
 import IngredientInput from './IngredientInput'
 import { Button } from '../../shared/Button'
-import { IIngredient, IRecipe } from '../../../types'
+import {
+  IIngredient,
+  IRecipe,
+  AddRecipesProps,
+  IEventTarget,
+} from '../../../types'
 import { ADD_RECIPE, RECIPES_QUERY } from '../../../queries/queries'
 
-interface IEventTarget {
-  name: string
-  value: string
-}
-interface IProps {
-  target: IEventTarget
-}
-
-const AddRecipe: React.FC = () => {
-  const ingredientsState: IIngredient = {
-    ingredient: '',
-    quantity: 0,
-    unit: 'lb',
-  }
+const AddRecipe: React.FC<AddRecipesProps> = ({
+  ingredientsHandler,
+  recipeIngredients,
+  recipeIngredientsHandler,
+  removeIngredientsHandler,
+  ingredient,
+  quantity,
+  unit,
+}: AddRecipesProps) => {
   const initialState: IRecipe = {
     recipe: '',
     instructions: '',
   }
-
-  const [recipeIngredients, setRecipeIngredients] = useState<IIngredient[]>([
-    { ...ingredientsState },
-  ])
   const [recipeData, setRecipeData] = useState<IRecipe>(initialState)
   const [isOpen, setIsOpen] = useState({ open: false })
 
   const inputEl = useRef() as MutableRefObject<HTMLInputElement>
   const textAreaEl = useRef() as MutableRefObject<HTMLTextAreaElement>
 
-  const onChangeHandler = ({ target: { name, value } }: IProps) => {
+  const onChangeHandler = ({ target: { name, value } }: IEventTarget) => {
     setRecipeData({ ...recipeData, [name]: value })
   }
 
   const resetStatesHandler = () => {
-    setRecipeIngredients([ingredientsState])
     setRecipeData(initialState)
     if (inputEl.current !== null) {
       inputEl.current.value = ''
@@ -120,7 +115,12 @@ const AddRecipe: React.FC = () => {
               </div>
               <IngredientInput
                 recipeIngredients={recipeIngredients}
-                setRecipeIngredients={setRecipeIngredients}
+                ingredientsHandler={ingredientsHandler}
+                recipeIngredientsHandler={recipeIngredientsHandler}
+                removeIngredientsHandler={removeIngredientsHandler}
+                ingredient={ingredient}
+                quantity={quantity}
+                unit={unit}
               />
             </div>
             <div className="mb-2">

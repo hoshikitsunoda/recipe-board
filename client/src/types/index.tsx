@@ -14,3 +14,22 @@ export interface IRecipe {
 export interface IRecipeList {
   recipes: IRecipe[]
 }
+
+export interface AddRecipesProps {
+  ingredientsHandler: (name: string, value: string) => void
+  recipeIngredients: IIngredient[]
+  recipeIngredientsHandler: () => void
+  removeIngredientsHandler: (name: string) => void
+  ingredient: string
+  quantity: number
+  unit: string
+}
+
+interface ITarget {
+  name: string
+  value: string
+}
+
+export interface IEventTarget {
+  target: ITarget
+}

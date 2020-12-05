@@ -1,79 +1,27 @@
-import { IIngredient } from '../../../types'
-import React, {
-  useState,
-  useRef,
-  MutableRefObject,
-  Dispatch,
-  SetStateAction,
-} from 'react'
+import { IEventTarget, AddRecipesProps } from '../../../types'
+import React, { useRef, MutableRefObject } from 'react'
 
 const units = ['', 'lb', 'oz', 'cup', 'tbsp', 'tsp', 'ml', 'inch']
 
-type IState = IIngredient
-
-interface IProps {
-  recipeIngredients: IIngredient[]
-  setRecipeIngredients: Dispatch<SetStateAction<IIngredient[]>>
-}
-
-const IngredientInput: React.FC<IProps> = ({
+const IngredientInput: React.FC<AddRecipesProps> = ({
   recipeIngredients,
-  setRecipeIngredients,
+  ingredientsHandler,
+  recipeIngredientsHandler,
+  removeIngredientsHandler,
+  ingredient,
+  quantity,
+  unit,
 }) => {
-  const initialState: IState = {
-    ingredient: '',
-    quantity: 0,
-    unit: '',
-  }
-
-  const [ingredients, setIngredients] = useState<IState>(initialState)
-
   const ingredientInput = useRef() as MutableRefObject<HTMLInputElement>
   const quantityInput = useRef() as MutableRefObject<HTMLInputElement>
   const unitInput = useRef() as MutableRefObject<HTMLSelectElement>
 
-  const onChangeHandler = (
-    event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
-  ): void => {
-    event.preventDefault()
-
-    setIngredients({
-      ...ingredients,
-      [event.target.name]: event.target.value,
-    })
+  const onChangeHandler = ({ target: { name, value } }: IEventTarget): void => {
+    ingredientsHandler(name, value)
   }
 
-  const addIngredientHandler = (
-    event: React.MouseEvent<HTMLButtonElement>
-  ): void => {
-    event.preventDefault()
-
-    setRecipeIngredients([
-      ...recipeIngredients,
-      {
-        ingredient: ingredients.ingredient,
-        quantity: ingredients.quantity,
-        unit: ingredients.unit,
-      },
-    ])
-
-    ingredientInput.current.value = ''
-    quantityInput.current.value = ''
-    unitInput.current.value = ''
-
-    setIngredients(initialState)
-  }
-
-  const removeIngredientHandler = (
-    name: string,
-    event: React.MouseEvent<HTMLButtonElement>
-  ): void => {
-    event.preventDefault()
-
-    const ingredientsCopy = [...recipeIngredients]
-    setRecipeIngredients(
-      ingredientsCopy.filter((item) => item.ingredient !== name)
-    )
+  const addIngredientHandler = () => {
+    recipeIngredientsHandler()
   }
 
   const ingredientList = recipeIngredients.map((ing, i) => {
@@ -85,7 +33,7 @@ const IngredientInput: React.FC<IProps> = ({
           <span className="w-2/12 pl-4">{ing.unit}</span>
           <button
             className="w-1/12"
-            onClick={(event) => removeIngredientHandler(ing.ingredient, event)}
+            onClick={() => removeIngredientsHandler(ing.ingredient)}
           >
             -
           </button>
@@ -105,6 +53,7 @@ const IngredientInput: React.FC<IProps> = ({
             name="ingredient"
             onChange={onChangeHandler}
             ref={ingredientInput}
+            value={ingredient}
           />
           <input
             className="appearance-none border rounded w-3/12 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
@@ -113,6 +62,7 @@ const IngredientInput: React.FC<IProps> = ({
             onChange={onChangeHandler}
             ref={quantityInput}
             min="0"
+            value={quantity}
           />
           <select
             className="border rounded w-2/12 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
