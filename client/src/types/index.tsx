@@ -23,6 +23,7 @@ export interface AddRecipesProps {
   ingredient: string
   quantity: number
   unit: string
+  units: string[]
 }
 
 interface ITarget {

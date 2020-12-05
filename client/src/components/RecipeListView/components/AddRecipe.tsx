@@ -19,6 +19,7 @@ const AddRecipe: React.FC<AddRecipesProps> = ({
   ingredient,
   quantity,
   unit,
+  units,
 }: AddRecipesProps) => {
   const initialState: IRecipe = {
     recipe: '',
@@ -121,6 +122,7 @@ const AddRecipe: React.FC<AddRecipesProps> = ({
                 ingredient={ingredient}
                 quantity={quantity}
                 unit={unit}
+                units={units}
               />
             </div>
             <div className="mb-2">

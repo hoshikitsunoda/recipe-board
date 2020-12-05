@@ -4,6 +4,8 @@ import AddRecipe from './components/AddRecipe'
 
 import { IIngredient } from '../../types'
 
+const units = ['', 'lb', 'oz', 'cup', 'tbsp', 'tsp', 'ml', 'inch']
+
 const RecipeListView = () => {
   const ingredientsState: IIngredient = {
     ingredient: '',
@@ -45,6 +47,7 @@ const RecipeListView = () => {
         ingredient={ingredient}
         quantity={quantity}
         unit={unit}
+        units={units}
       />
     </>
   )

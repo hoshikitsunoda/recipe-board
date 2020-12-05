@@ -1,7 +1,7 @@
 import { IEventTarget, AddRecipesProps } from '../../../types'
-import React, { useRef, MutableRefObject } from 'react'
+import React, { useRef, MutableRefObject, useState } from 'react'
 
-const units = ['', 'lb', 'oz', 'cup', 'tbsp', 'tsp', 'ml', 'inch']
+// const units = ['', 'lb', 'oz', 'cup', 'tbsp', 'tsp', 'ml', 'inch']
 
 const IngredientInput: React.FC<AddRecipesProps> = ({
   recipeIngredients,
@@ -11,7 +11,10 @@ const IngredientInput: React.FC<AddRecipesProps> = ({
   ingredient,
   quantity,
   unit,
+  units,
 }) => {
+  const [isAdded, setIsAdded] = useState(false)
+
   const ingredientInput = useRef() as MutableRefObject<HTMLInputElement>
   const quantityInput = useRef() as MutableRefObject<HTMLInputElement>
   const unitInput = useRef() as MutableRefObject<HTMLSelectElement>
@@ -22,6 +25,7 @@ const IngredientInput: React.FC<AddRecipesProps> = ({
 
   const addIngredientHandler = () => {
     recipeIngredientsHandler()
+    isAdded ? setIsAdded(false) : setIsAdded((prev) => !prev)
   }
 
   const ingredientList = recipeIngredients.map((ing, i) => {
@@ -53,7 +57,7 @@ const IngredientInput: React.FC<AddRecipesProps> = ({
             name="ingredient"
             onChange={onChangeHandler}
             ref={ingredientInput}
-            value={ingredient}
+            value={isAdded ? '' : ingredient}
           />
           <input
             className="appearance-none border rounded w-3/12 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
@@ -62,7 +66,7 @@ const IngredientInput: React.FC<AddRecipesProps> = ({
             onChange={onChangeHandler}
             ref={quantityInput}
             min="0"
-            value={quantity}
+            value={isAdded ? '' : quantity}
           />
           <select
             className="border rounded w-2/12 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
