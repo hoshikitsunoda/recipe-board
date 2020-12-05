@@ -1,6 +1,8 @@
 import React from 'react'
+import { Route, Switch } from 'react-router-dom'
 import { ApolloClient, ApolloProvider, InMemoryCache } from '@apollo/client'
 import RecipeListView from './components/RecipeListView'
+import RecipeDetail from './components/RecipeDetail'
 
 const URI: string = `http://localhost:8000/graphql`
 
@@ -18,7 +20,10 @@ const App: React.FC = () => {
             Recipe Board
           </h1>
         </header>
-        <RecipeListView />
+        <Switch>
+          <Route path="/" exact component={RecipeListView} />
+          <Route path="/detail" component={RecipeDetail} />
+        </Switch>
       </div>
     </ApolloProvider>
   )
