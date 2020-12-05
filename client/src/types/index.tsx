@@ -20,6 +20,7 @@ export interface IngInputProps {
   recipeIngredients: IIngredient[]
   recipeIngredientsHandler: () => void
   removeIngredientsHandler: (name: string) => void
+  resetIngredients: () => void
   ingredient: string
   quantity: number
   unit: string

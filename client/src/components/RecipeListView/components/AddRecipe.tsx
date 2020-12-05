@@ -18,6 +18,7 @@ const AddRecipe: React.FC<AddRecipeProps> = ({
   removeIngredientsHandler,
   setRecipeHandler,
   resetRecipeDetail,
+  resetIngredients,
   ingredient,
   quantity,
   unit,
@@ -120,6 +121,7 @@ const AddRecipe: React.FC<AddRecipeProps> = ({
                 ingredientsHandler={ingredientsHandler}
                 recipeIngredientsHandler={recipeIngredientsHandler}
                 removeIngredientsHandler={removeIngredientsHandler}
+                resetIngredients={resetIngredients}
                 ingredient={ingredient}
                 quantity={quantity}
                 unit={unit}

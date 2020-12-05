@@ -45,8 +45,13 @@ const RecipeListView = () => {
     setRecipeData({ ...recipeData, [name]: value })
   }
 
+  const resetIngredientsHandler = () => {
+    setIngredients(ingredientsState)
+  }
+
   const resetRecipeDetailHandler = () => {
     setRecipeData(recipeState)
+    setRecipeIngredients([{ ...ingredientsState }])
   }
 
   const { ingredient, quantity, unit } = ingredients
@@ -61,6 +66,7 @@ const RecipeListView = () => {
         removeIngredientsHandler={removeIngredientsHandler}
         setRecipeHandler={setRecipeHandler}
         resetRecipeDetail={resetRecipeDetailHandler}
+        resetIngredients={resetIngredientsHandler}
         ingredient={ingredient}
         quantity={quantity}
         unit={unit}

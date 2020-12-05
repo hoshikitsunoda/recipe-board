@@ -1,31 +1,24 @@
 import { IEventTarget, IngInputProps } from '../../../types'
-import React, { useRef, MutableRefObject, useState } from 'react'
-
-// const units = ['', 'lb', 'oz', 'cup', 'tbsp', 'tsp', 'ml', 'inch']
+import React from 'react'
 
 const IngredientInput: React.FC<IngInputProps> = ({
   recipeIngredients,
   ingredientsHandler,
   recipeIngredientsHandler,
   removeIngredientsHandler,
+  resetIngredients,
   ingredient,
   quantity,
   unit,
   units,
 }) => {
-  const [isAdded, setIsAdded] = useState(false)
-
-  const ingredientInput = useRef() as MutableRefObject<HTMLInputElement>
-  const quantityInput = useRef() as MutableRefObject<HTMLInputElement>
-  const unitInput = useRef() as MutableRefObject<HTMLSelectElement>
-
   const onChangeHandler = ({ target: { name, value } }: IEventTarget): void => {
     ingredientsHandler(name, value)
   }
 
   const addIngredientHandler = () => {
     recipeIngredientsHandler()
-    isAdded ? setIsAdded(false) : setIsAdded((prev) => !prev)
+    resetIngredients()
   }
 
   const ingredientList = recipeIngredients.map((ing, i) => {
@@ -56,24 +49,21 @@ const IngredientInput: React.FC<IngInputProps> = ({
             type="text"
             name="ingredient"
             onChange={onChangeHandler}
-            ref={ingredientInput}
-            value={isAdded ? '' : ingredient}
+            value={ingredient}
           />
           <input
             className="appearance-none border rounded w-3/12 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
             type="number"
             name="quantity"
             onChange={onChangeHandler}
-            ref={quantityInput}
             min="0"
-            value={isAdded ? '' : quantity}
+            value={quantity}
           />
           <select
             className="border rounded w-2/12 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
             name="unit"
             id="unit"
             onChange={onChangeHandler}
-            ref={unitInput}
           >
             {units.map((unit) => (
               <option key={unit} value={unit}>
