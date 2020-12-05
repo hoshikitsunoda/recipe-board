@@ -15,7 +15,7 @@ export interface IRecipeList {
   recipes: IRecipe[]
 }
 
-export interface AddRecipesProps {
+export interface IngInputProps {
   ingredientsHandler: (name: string, value: string) => void
   recipeIngredients: IIngredient[]
   recipeIngredientsHandler: () => void
@@ -33,4 +33,11 @@ interface ITarget {
 
 export interface IEventTarget {
   target: ITarget
+}
+
+export interface AddRecipeProps extends IngInputProps {
+  setRecipeHandler: (name: string, value: string) => void
+  resetRecipeDetail: () => void
+  recipe: string
+  instructions: string
 }

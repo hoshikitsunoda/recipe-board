@@ -1,9 +1,9 @@
-import { IEventTarget, AddRecipesProps } from '../../../types'
+import { IEventTarget, IngInputProps } from '../../../types'
 import React, { useRef, MutableRefObject, useState } from 'react'
 
 // const units = ['', 'lb', 'oz', 'cup', 'tbsp', 'tsp', 'ml', 'inch']
 
-const IngredientInput: React.FC<AddRecipesProps> = ({
+const IngredientInput: React.FC<IngInputProps> = ({
   recipeIngredients,
   ingredientsHandler,
   recipeIngredientsHandler,

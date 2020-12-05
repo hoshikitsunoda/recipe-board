@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import RecipeList from './components/RecipeList'
 import AddRecipe from './components/AddRecipe'
 
-import { IIngredient } from '../../types'
+import { IIngredient, IRecipe } from '../../types'
 
 const units = ['', 'lb', 'oz', 'cup', 'tbsp', 'tsp', 'ml', 'inch']
 
@@ -13,10 +13,16 @@ const RecipeListView = () => {
     unit: 'lb',
   }
 
+  const recipeState: IRecipe = {
+    recipe: '',
+    instructions: '',
+  }
+
   const [ingredients, setIngredients] = useState<IIngredient>(ingredientsState)
   const [recipeIngredients, setRecipeIngredients] = useState<IIngredient[]>([
     { ...ingredientsState },
   ])
+  const [recipeData, setRecipeData] = useState<IRecipe>(recipeState)
 
   const ingredientsHandler = (name: string, value: string) => {
     setIngredients({
@@ -35,7 +41,16 @@ const RecipeListView = () => {
     setRecipeIngredients([...recipeIngredients, ingredients])
   }
 
+  const setRecipeHandler = (name: string, value: string) => {
+    setRecipeData({ ...recipeData, [name]: value })
+  }
+
+  const resetRecipeDetailHandler = () => {
+    setRecipeData(recipeState)
+  }
+
   const { ingredient, quantity, unit } = ingredients
+  const { recipe, instructions } = recipeData
   return (
     <>
       <RecipeList />
@@ -44,10 +59,14 @@ const RecipeListView = () => {
         recipeIngredients={recipeIngredients}
         recipeIngredientsHandler={recipeIngredientsHandler}
         removeIngredientsHandler={removeIngredientsHandler}
+        setRecipeHandler={setRecipeHandler}
+        resetRecipeDetail={resetRecipeDetailHandler}
         ingredient={ingredient}
         quantity={quantity}
         unit={unit}
         units={units}
+        recipe={recipe}
+        instructions={instructions}
       />
     </>
   )

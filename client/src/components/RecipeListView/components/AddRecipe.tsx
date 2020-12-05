@@ -6,21 +6,25 @@ import { Button } from '../../shared/Button'
 import {
   IIngredient,
   IRecipe,
-  AddRecipesProps,
+  AddRecipeProps,
   IEventTarget,
 } from '../../../types'
 import { ADD_RECIPE, RECIPES_QUERY } from '../../../queries/queries'
 
-const AddRecipe: React.FC<AddRecipesProps> = ({
+const AddRecipe: React.FC<AddRecipeProps> = ({
   ingredientsHandler,
   recipeIngredients,
   recipeIngredientsHandler,
   removeIngredientsHandler,
+  setRecipeHandler,
+  resetRecipeDetail,
   ingredient,
   quantity,
   unit,
   units,
-}: AddRecipesProps) => {
+  recipe,
+  instructions,
+}) => {
   const initialState: IRecipe = {
     recipe: '',
     instructions: '',
@@ -32,15 +36,11 @@ const AddRecipe: React.FC<AddRecipesProps> = ({
   const textAreaEl = useRef() as MutableRefObject<HTMLTextAreaElement>
 
   const onChangeHandler = ({ target: { name, value } }: IEventTarget) => {
-    setRecipeData({ ...recipeData, [name]: value })
+    setRecipeHandler(name, value)
   }
 
   const resetStatesHandler = () => {
-    setRecipeData(initialState)
-    if (inputEl.current !== null) {
-      inputEl.current.value = ''
-      textAreaEl.current.value = ''
-    }
+    resetRecipeDetail()
   }
 
   const toggleHandler = () => {
@@ -92,6 +92,7 @@ const AddRecipe: React.FC<AddRecipesProps> = ({
                 name="recipe"
                 ref={inputEl}
                 onChange={onChangeHandler}
+                value={recipe}
               />
             </div>
             <div className="mb-2">
@@ -137,6 +138,7 @@ const AddRecipe: React.FC<AddRecipesProps> = ({
                 className="border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                 ref={textAreaEl}
                 onChange={onChangeHandler}
+                value={instructions}
               />
             </div>
             <Mutation
