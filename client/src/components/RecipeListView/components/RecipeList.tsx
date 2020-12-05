@@ -19,7 +19,7 @@ const RecipeList: React.FC = () => {
     .map((props: IRecipe) => <RecipeItem key={props.id} {...props} />)
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-6 lg:mx-auto my-0">
+    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10 max-w-6xl mx-6 lg:mx-auto lg:my-16">
       {recipeItem}
     </div>
   )
