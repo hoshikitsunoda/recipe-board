@@ -1,7 +1,8 @@
 import React from 'react'
 import { Mutation } from '@apollo/client/react/components'
+import { v4 as uuidv4 } from 'uuid'
 
-import { Button } from '../../shared/Button'
+import { Button, LinkButton } from '../../shared/Button'
 import { IIngredient, IRecipe } from '../../../types'
 import { REMOVE_RECIPE, RECIPES_QUERY } from '../../../queries/queries'
 
@@ -25,6 +26,7 @@ const RecipeItem: React.FC<IRecipe> = ({
         )}
       </ul>
       <p className="font-serif text-sm mt-6 tracking-wide">{instructions}</p>
+      <LinkButton id={uuidv4()}>See the recipe</LinkButton>
       <Mutation
         mutation={REMOVE_RECIPE}
         variables={{ id: id }}
@@ -38,7 +40,9 @@ const RecipeItem: React.FC<IRecipe> = ({
       >
         {(mutation: any) => (
           <div className="w-full text-right mt-4">
-            <Button onClick={mutation}>delete</Button>
+            <Button onClick={mutation} red>
+              delete
+            </Button>
           </div>
         )}
       </Mutation>
