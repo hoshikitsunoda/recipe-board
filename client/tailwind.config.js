@@ -12,6 +12,10 @@ module.exports = {
     borderColor: {
       solidPink: '#f36d9e',
     },
+    backgroundColor: (theme) => ({
+      ...theme('colors'),
+      pink: '#f36d9e',
+    }),
   },
   variants: {},
   plugins: [],

@@ -22,7 +22,7 @@ const App: React.FC = () => {
         </header>
         <Switch>
           <Route path="/" exact component={RecipeListView} />
-          <Route path="/detail" component={RecipeDetail} />
+          <Route path="/detail/:id" component={RecipeDetail} />
         </Switch>
       </div>
     </ApolloProvider>

@@ -1,6 +1,5 @@
 import React from 'react'
 import { Mutation } from '@apollo/client/react/components'
-import { v4 as uuidv4 } from 'uuid'
 
 import { Button, LinkButton } from '../../shared/Button'
 import { IIngredient, IRecipe } from '../../../types'
@@ -26,7 +25,7 @@ const RecipeItem: React.FC<IRecipe> = ({
         )}
       </ul>
       <p className="font-serif text-sm mt-6 tracking-wide">{instructions}</p>
-      <LinkButton id={uuidv4()}>See the recipe</LinkButton>
+      <LinkButton id={id}>See the recipe</LinkButton>
       <Mutation
         mutation={REMOVE_RECIPE}
         variables={{ id: id }}

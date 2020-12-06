@@ -6,19 +6,7 @@ import { IIngredient, IRecipe } from '../../types'
 
 const units = ['', 'lb', 'oz', 'cup', 'tbsp', 'tsp', 'ml', 'inch']
 
-interface RouteComponentProps {
-  match: any
-  location: any
-  history: any
-  staticContext?: any
-}
-
-const RecipeListView = ({
-  match,
-  history,
-  location,
-  staticContext,
-}: RouteComponentProps) => {
+const RecipeListView = () => {
   const ingredientsState: IIngredient = {
     ingredient: '',
     quantity: 0,
