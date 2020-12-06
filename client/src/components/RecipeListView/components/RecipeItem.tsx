@@ -31,30 +31,7 @@ const RecipeItem: React.FC<IRecipe> = ({
           </p>
         </div>
       </div>
-      <div className="flex">
-        <div className="w-9/12">
-          <LinkButton id={id}>See the recipe</LinkButton>
-        </div>
-        <Mutation
-          mutation={REMOVE_RECIPE}
-          variables={{ id: id }}
-          refetchQueries={() => {
-            return [
-              {
-                query: RECIPES_QUERY,
-              },
-            ]
-          }}
-        >
-          {(mutation: any) => (
-            <div className="w-3/12">
-              <Button onClick={mutation} red>
-                delete
-              </Button>
-            </div>
-          )}
-        </Mutation>
-      </div>
+      <LinkButton id={id}>See the recipe</LinkButton>
     </div>
   )
 }
